@@ -1,0 +1,21 @@
+--- nagios-nrdp-0.1.3/server/config.inc.php~	2010-07-27 13:51:28.000000000 +0300
++++ nagios-nrdp-0.1.3/server/config.inc.php	2012-01-07 21:49:47.458416000 +0200
+@@ -34,14 +34,15 @@
+ $cfg["nagios_command_group"]="nagcmd";
+ 
+ // full path to Nagios external command file
+-$cfg["command_file"]="/usr/local/nagios/var/rw/nagios.cmd";
++$cfg["command_file"]="/var/lib/nagios/rw/nagios.cmd";
+ 
+ // full path to check results spool directory
+-$cfg["check_results_dir"]="/usr/local/nagios/var/spool/checkresults";
++//$cfg["check_results_dir"]="/var/spool/nagios/checkresults";
++$cfg["check_results_dir"]="/var/lib/nagios/nrdp";
+ 
+ // full path to directory where temp scratch files can be written
+ // NOTE: the Apache user need to be able create files here, and the Nagios user needs to read/delete those same files, so the /tmp system directory won't work (it has a sticky bit on it)
+-$cfg["tmp_dir"]="/usr/local/nagios/var/tmp";
++$cfg["tmp_dir"]="/var/lib/nagios/nrdp";
+ 
+ 	
+ ///////// DONT MODIFY ANYTHING BELOW THIS LINE /////////
