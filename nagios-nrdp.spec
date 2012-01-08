@@ -1,16 +1,19 @@
+# TODO
+# - send_nrdp  is crap, it never reports any errors back
 %define		pkg	nrdp
 %define		php_min_version 5.1.0
 %include	/usr/lib/rpm/macros.php
 Summary:	Nagios Remote Data Processor (NDRP)
 Name:		nagios-%{pkg}
 Version:	1.2
-Release:	0.4
+Release:	0.6
 License:	GPL v2 (server), BSD (send_nrdp)
 Group:		Applications/WWW
 Source0:	http://assets.nagios.com/downloads/nrdp/nrdp.zip
 # Source0-md5:	e67bb3c660b22d80abd8a06a4853d814
 Patch0:		config.patch
 URL:		http://exchange.nagios.org/directory/Addons/Passive-Checks/NRDP--2D-Nagios-Remote-Data-Processor/details
+BuildRequires:	rpmbuild(macros) >= 1.553
 Requires:	nagios
 Requires:	nagios-cgi
 Requires:	php-common >= 4:%{php_min_version}
@@ -37,18 +40,30 @@ customized to fit individual users' needs. It uses standard ports
 protocols (HTTP(S) and XML) and can be implemented as a replacement
 for NSCA.
 
+%package client
+Summary:	NRDP Host and Service Check Client
+Group:		Networking
+Requires:	php-common >= 4:%{php_min_version}
+Requires:	php-date
+
+%description client
+Client to send results to Nagios Remote Data Processor (NDRP) server.
+
 %prep
 %setup -qc
 mv %{pkg}/* .
 %patch0 -p1
+%undos clients/send_nrdp.php
 
 %install
 rm -rf $RPM_BUILD_ROOT
-install -d $RPM_BUILD_ROOT{%{_sysconfdir},%{_appdir},/var/lib/nagios/%{pkg}}
+install -d $RPM_BUILD_ROOT{%{_sysconfdir},%{_appdir},/var/lib/nagios/%{pkg},%{_bindir}}
 cp -a server/* /$RPM_BUILD_ROOT%{_appdir}
 
 mv $RPM_BUILD_ROOT{%{_appdir}/config.inc.php,%{_sysconfdir}/%{pkg}.php}
 ln -s %{_sysconfdir}/%{pkg}.php $RPM_BUILD_ROOT%{_appdir}/config.inc.php
+
+install -p clients/send_nrdp.php $RPM_BUILD_ROOT%{_bindir}/send_nrdp
 
 %clean
 rm -rf $RPM_BUILD_ROOT
@@ -61,3 +76,7 @@ rm -rf $RPM_BUILD_ROOT
 
 # tmp dir for data exchange nagios/webserver
 %attr(2770,root,nagcmd) %dir /var/lib/nagios/%{pkg}
+
+%files client
+%defattr(644,root,root,755)
+%attr(755,root,root) %{_bindir}/send_nrdp
