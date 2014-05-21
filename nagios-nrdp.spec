@@ -16,10 +16,10 @@ URL:		http://exchange.nagios.org/directory/Addons/Passive-Checks/NRDP--2D-Nagios
 BuildRequires:	rpmbuild(macros) >= 1.553
 Requires:	nagios
 Requires:	nagios-cgi
-Requires:	php-common >= 4:%{php_min_version}
-Requires:	php-date
-Requires:	php-simplexml
-Requires:	php-xml
+Requires:	php(core) >= %{php_min_version}
+Requires:	php(date)
+Requires:	php(simplexml)
+Requires:	php(xml)
 BuildArch:	noarch
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
@@ -43,8 +43,8 @@ for NSCA.
 %package client
 Summary:	NRDP Host and Service Check Client
 Group:		Networking
-Requires:	php-common >= 4:%{php_min_version}
-Requires:	php-date
+Requires:	php(core) >= %{php_min_version}
+Requires:	php(date)
 
 %description client
 Client to send results to Nagios Remote Data Processor (NDRP) server.
