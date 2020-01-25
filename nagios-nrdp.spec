@@ -2,7 +2,6 @@
 # - send_nrdp  is crap, it never reports any errors back
 %define		pkg	nrdp
 %define		php_min_version 5.1.0
-%include	/usr/lib/rpm/macros.php
 Summary:	Nagios Remote Data Processor (NDRP)
 Name:		nagios-%{pkg}
 Version:	1.2
