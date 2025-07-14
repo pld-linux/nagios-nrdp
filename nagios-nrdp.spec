@@ -51,7 +51,7 @@ Client to send results to Nagios Remote Data Processor (NDRP) server.
 %prep
 %setup -qc
 mv %{pkg}/* .
-%patch0 -p1
+%patch -P0 -p1
 %undos clients/send_nrdp.php
 
 %install
